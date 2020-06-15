@@ -63,27 +63,26 @@ def a(x):
     fft_freqs_side = np.array(freqs_side)
 
 
-    smoothed=smooth(abs(FFT_side),225,'hanning')
+    smoothed=smooth(abs(FFT_side),500,'hanning')
     #smoothedX=smooth(freqs_side, 45, 'hanning')
     X = np.linspace(0, fs_rate/2, smoothed.shape[0] , endpoint=True)
     indexes = peakutils.indexes(smoothed, thres=0.1/max(smoothed), min_dist=20)
 
     #yplt.plot(freqs_side, abs(FFT_side))
-    #plt.plot(X, smoothed)
-    #plt.plot(X[indexes],smoothed[indexes], marker="o", ls="", ms=3 )
+    plt.plot(X, smoothed)
+    plt.plot(X[indexes],smoothed[indexes], marker="o", ls="", ms=3 )
 
-    #plt.xlabel('Frequency (Hz)')
-    #plt.ylabel('Count single-sided')
-    #plt.show()
+    plt.xlabel('Frequency (Hz)')
+    plt.ylabel('Count single-sided')
+    plt.show()
 
 #put in bounds for peak to be found below, will add functionality for multiple peaks later
 
  	       
     for i in indexes:
-        if X[i] > 1800:  		
-            if X[i] < 2000:  
+        if X[i] > 3800:  		
+            if X[i] < 3900:  
                 return X[i]
 
 
-
-
+print(a(str(sys.argv[1])))
