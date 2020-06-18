@@ -4,8 +4,8 @@ import matplotlib.pyplot as plt
 bubble_speed = 3.6  #in cms
 water_height = 7    #in cm
 time_to_top =  water_height/bubble_speed
-total_gas = 300     #in cm^3
-dissolving_rate = 40    #time to dissolve in s
+total_gas = 90     #in cm^3
+dissolving_rate = 20    #time to dissolve in s
 gas_per_second = total_gas/dissolving_rate
 gas_leaving_per_second = gas_per_second*0.75
 t = np.arange(0., 80., 0.1)
@@ -26,8 +26,24 @@ for i in t:
             air_volume[step]= air_volume[step] - gas_leaving_per_second*res
             step += 1
         else:
-                air_volume[step] = air_volume[step-1] - gas_leaving_per_second*res
-                step += 1
+                toset = air_volume[step-1] - gas_leaving_per_second*res
+                if toset < 1:
+                    break
+                else:
+                    air_volume[step] = toset
+                    step += 1
+
+
+
+water_volume = 2000  #cm3
+Fa = air_volume/water_volume
+
+V = 1470/(np.sqrt(1+(1.49*10000*Fa)))
+
+f=V/(4*(12*0.01))
+
+
+#start of in vino veritas model
 
 
 
@@ -37,7 +53,9 @@ for j in air_volume:
     print(j)
 
 
-plt.plot(t,air_volume)
+plt.plot(t,Fa)
+plt.plot(t,f)
+#plt.plot(t,air_volume)
 plt.show()
 
 
