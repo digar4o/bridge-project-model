@@ -53,8 +53,8 @@ pl=1        #water density
 R=3.25          #glass radius density
 Hw=6         #height of water cm
 
-def get_harmonic(m,n,hl):
-    f=(1/(12*math.pi))*np.sqrt((3*y)/pg)*(a/(R**2))*np.sqrt(((((n**2)-1)**2)+(((m*R)/H)**4) )/(1+(1/(n**2))))
+def get_harmonics(m,n,hl):
+    f=(1/(12*math.pi))*np.sqrt((3*y)/pg)*(a/(np.power(R,2)))*np.sqrt(   ((np.power((np.power(n,2)-1),2)) + np.power(((m*R)/H),4))  / (1+(1/(np.power(n,2) ))))
     
     fl= f/(np.sqrt(((1+(((a*pl*R)/(5*pg*a))*(hl/H)**4)))))
 
@@ -65,11 +65,16 @@ for j in air_volume:
     print(j)
 
 
-plt.plot(t,Fa)
+#plt.plot(t,Fa)
 plt.plot(t,f)
 #plt.plot(t,air_volume)
-plt.show()
+plt.hlines(get_harmonics(1,1,Hw),0,80)
+plt.hlines(get_harmonics(1,2,Hw),0,80)
+plt.hlines(get_harmonics(1,3,Hw),0,80)
+plt.hlines(get_harmonics(0,0,Hw),0,80)
+plt.hlines(get_harmonics(2,0,Hw),0,80)
+plt.hlines(get_harmonics(2,1,Hw),0,80)
 
-print(get_harmonic(1,2,Hw))
+plt.show()
 
 
