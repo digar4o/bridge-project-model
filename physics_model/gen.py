@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import math
 
 bubble_speed = 3.6  #in cms
 water_height = 7    #in cm
@@ -44,9 +45,20 @@ f=V/(4*(12*0.01))
 
 
 #start of in vino veritas model
+H=13.8     #height in cm
+pg=2.5      #glass density gcm3
+a=0.5     #thickness
+y=6*np.power(10,11)     #youngs modulus dyn/cm2
+pl=1        #water density
+R=3.25          #glass radius density
+Hw=6         #height of water cm
 
+def get_harmonic(m,n,hl):
+    f=(1/(12*math.pi))*np.sqrt((3*y)/pg)*(a/(R**2))*np.sqrt(((((n**2)-1)**2)+(((m*R)/H)**4) )/(1+(1/(n**2))))
+    
+    fl= f/(np.sqrt(((1+(((a*pl*R)/(5*pg*a))*(hl/H)**4)))))
 
-
+    return fl
 
 
 for j in air_volume:
@@ -57,5 +69,7 @@ plt.plot(t,Fa)
 plt.plot(t,f)
 #plt.plot(t,air_volume)
 plt.show()
+
+print(get_harmonic(1,2,Hw))
 
 
