@@ -18,22 +18,15 @@ maximum = 0
 air_volume[0]=0
 for i in t:
     if t[step]<time_to_top:
-        air_volume[step] = gas_per_second*i
+        air_volume[step] = air_volume[step-1] + gas_per_second*res
         step += 1
     elif t[step] >= time_to_top:
         if t[step] < dissolving_rate:
-            air_volume[step]=i*gas_per_second
-            air_volume[step]= air_volume[step] - gas_leaving_per_second*(i-time_to_top)
-            step += 1
-
-        elif t[step] == dissolving_rate:
-            maximum = air_volume[step-1]
-            air_volume[step] = maximum
+            air_volume[step]=air_volume[step-1] + gas_per_second*res
+            air_volume[step]= air_volume[step] - gas_leaving_per_second*res
             step += 1
         else:
-                toadd = maximum - gas_leaving_per_second*(i-dissolving_rate)
-                if toadd >= 0:
-                    air_volume[step]=toadd
+                air_volume[step] = air_volume[step-1] - gas_leaving_per_second*res
                 step += 1
 
 
